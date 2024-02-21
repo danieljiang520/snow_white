@@ -8,9 +8,6 @@ Z = Z*250;%Z*250;
 % Get temperature model
 T = temperature(); 
 
-% Get elevation. NOTE: should slice the mountain map iteratively
-E = 600;
-
 % Get the precipitation model
 P = precipitation();
 
@@ -59,11 +56,12 @@ camlight left;
 % % axis([0 365 10 90]);
 
 %% Loop the mountain
+pause(3);
 for i=1:length(t)
     snow_at_t = reshape(y(i,1:N^2),[N N]); snow_at_t = snow_at_t';
     f = figure(2);
     f.Position = [100 100 1000 500];
-    subplot(1,2,1);
+    subplot(2,2,[1 3]);
 %     h = heatmap(snow_at_t,'CellLabelColor','none');
     surf(X,Y,Z,snow_at_t,'FaceColor','interp','FaceLighting','phong');
     colormap('bone'); 
@@ -72,13 +70,20 @@ for i=1:length(t)
     zlabel('Elevation (m)');
     title(sprintf('Snowfall Accumulation (Low Elevation) at day=%g', i),'FontSize',13);
 
-    subplot(1,2,2);
+    subplot(2,2,2);
     temp_t = 1:1:i;
     plot(temp_t, P(temp_t));
     title(sprintf('Snowfall at day=%g', i), "FontSize", 13);
     xlabel('Day');
     ylabel('Inches');
     axis([0 365 0 15]);
+
+    subplot(2,2,4);
+    plot(temp_t, T(temp_t));
+    title('Temperature');
+    xlabel('day');
+    ylabel('C');
+    axis([0 365 -30 40]);
 
     pause(0.01);
 end

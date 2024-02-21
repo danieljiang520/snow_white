@@ -9,7 +9,7 @@ data = readtable(filename);
 % Extracting the timestamp and mean temperature
 temp = data{11:end,4}.'; % 4th col
 temp = (temp - 32) * 5/9; % convert to celsius
-temp = (temp - 10)*1.5; % shift to Ann Arbor
+temp = (temp - 15)*2.3; % shift to Ann Arbor
 t = 1:length(temp);
 
 % difference between model and data
